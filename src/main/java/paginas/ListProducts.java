@@ -4,13 +4,15 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import utiles.ConfigProperties;
 import utiles.Product;
+
+import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import static java.lang.Integer.valueOf;
 
 public class ListProducts extends BasePage{
     ConfigProperties auxiliar = new ConfigProperties();
@@ -51,18 +53,21 @@ public class ListProducts extends BasePage{
     }
     public void getProductsToTxt(String fileName) throws IOException {
         getInfoProductsOfPages(Integer.parseInt(dateText.getProperty("numberOfPages")));
-        FileWriter pw;
         try {
-            pw = new FileWriter("output/"+fileName, true);
+            BufferedWriter resultTxt= new BufferedWriter(new FileWriter("output/"+fileName, false));
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            DateTimeFormatter hf = DateTimeFormatter.ofPattern("HH:mm");
+            resultTxt.write("Archivo generado el " + dtf.format(LocalDateTime.now()) +
+                    " a las "+ hf.format(LocalDateTime.now())+"\n"+"\n");
             int cont = 1;
             for (Product producto : productos) {
-                pw.write("Articulo " + cont + ":" + "\n");
-                pw.write(producto.getName() + "\n");
-                pw.write("$" + producto.getPrice() + "\n");
-                pw.write(producto.getLink() + "\n" + "\n");
+                resultTxt.write("Articulo " + cont + ":" + "\n");
+                resultTxt.write(producto.getName() + "\n");
+                resultTxt.write("$" + producto.getPrice() + "\n");
+                resultTxt.write(producto.getLink() + "\n" + "\n");
                 cont++;
             }
-            pw.close();
+            resultTxt.close();
         } catch (IOException e) {
             throw new IOException("No se pudo generar el archivo.", e);
         }

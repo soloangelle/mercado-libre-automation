@@ -23,14 +23,6 @@ public class BasePage {
         BasePage.driver = driver;
     }
 
-    //Estable la conexión con el navegador Chrome
-    public WebDriver chromeDriverConnection(){
-           System.setProperty("webdriver.chrome.driver","drivers/chromedriver.exe");
-            ChromeOptions chromeOptions = new ChromeOptions();
-           BasePage.driver = new ChromeDriver(chromeOptions);
-           return driver;
-    }
-
     public WebDriverWait setWait(int seconds){
         return new WebDriverWait(driver, seconds);
     }
@@ -55,11 +47,6 @@ public class BasePage {
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(keyword);
     }
-
-    /*public void enter(By locator ){  //
-        driver.findElement(locator).clear();
-        driver.findElement(locator).submit();
-    }*/
 
     public void click(By locator){
         findElement(locator).click();
