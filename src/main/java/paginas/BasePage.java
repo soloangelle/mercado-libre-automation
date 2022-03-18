@@ -43,7 +43,7 @@ public class BasePage {
         return driver.findElement(locator).getText();
     }
 
-    public void typeText(String keyword, By locator ){  // Ingresar text en la página en un localizador
+    public void typeText(String keyword, By locator ){
         driver.findElement(locator).clear();
         driver.findElement(locator).sendKeys(keyword);
     }
@@ -52,7 +52,7 @@ public class BasePage {
         findElement(locator).click();
     }
 
-    public Boolean isDisplayed(By locator){     // Verifica si un elemento existe
+    public Boolean isDisplayed(By locator){
         try {
             return driver.findElement(locator).isDisplayed();
         } catch (org.openqa.selenium.NoSuchElementException e){
